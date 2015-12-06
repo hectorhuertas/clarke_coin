@@ -3,11 +3,12 @@ require_relative 'wallet'
 require 'fileutils'
 
 class ClarkeCoin
+  attr_reader :wallet
   def initialize
     @wallet = Wallet.new
   end
 
   def run
-    puts wallet
+    p wallet
   end
 end
