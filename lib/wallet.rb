@@ -1,46 +1,17 @@
+require_relative 'wallet_loader'
 require 'openssl'
 class Wallet
-  attr_reader :private_key,
-              :public_key,
-              :file
+  attr_reader :public_key,
+              :private_key
 
-  def initialize
-    @file = FileIO.new
-    initialize_keys
-  end
-
-  def initialize_keys
-     retrieve_keys || create_keys
-  end
-
-  def retrieve_keys
-    begin
-      @private_key = retrieve_key(File.expand_path('~/.wallet/private_key.pem'))
-      @public_key  = retrieve_key(File.expand_path('~/.wallet/public_key.pem'))
-    rescue
-      false
+  def initialize(options = {})
+    if options[:keys]
+      @public_key   = options[:public_key]
+      @private_key  = options[:private_key]
+    else
+      wallet_loader = WalletLoader.new(options)
+      @public_key   = wallet_loader.public_key
+      @private_key  = wallet_loader.private_key
     end
-  end
-
-  def retrieve_key(location)
-    pem = file.read(location)
-    OpenSSL::PKey.read(pem)
-  end
-
-  def create_keys
-    generate_keys
-    store_keys
-  end
-
-  def generate_keys
-    @private_key = OpenSSL::PKey::RSA.generate(2048)
-    @public_key  = private_key.public_key
-  end
-
-  def store_keys
-    FileUtils.mkdir_p File.expand_path('~/.wallet/')
-
-    file.write(File.expand_path('~/.wallet/private_key.pem'), private_key)
-    file.write(File.expand_path('~/.wallet/public_key.pem'),  public_key)
   end
 end
