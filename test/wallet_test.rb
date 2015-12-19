@@ -37,8 +37,8 @@ class WalletTest < Minitest::Test
   #   # binding.pry
   #   assert wallet.verify
   # end
-  def test_it_signs_stuff
-    skip
-    assert_equal "", wallet.sign('bob')
-  end
+  # def test_it_signs_stuff
+  #   skip
+  #   assert_equal "", wallet.sign('bob')
+  # end
 end

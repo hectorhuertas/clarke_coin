@@ -35,11 +35,11 @@ class Wallet
     public_key.verify(OpenSSL::Digest::SHA256.new, signature, message)
   end
 
-  def verify_tx(tx)
-    # check all inputs belong to its owners
-    #check inputs = outputs
-    # check that inputs are still available for spending(how????)
-
-  end
+  # def verify_tx(tx)
+  #   # check all inputs belong to its owners
+  #   #check inputs = outputs
+  #   # check that inputs are still available for spending(how????)
+  #
+  # end
 
 end
